@@ -1,415 +1,704 @@
 <!doctype html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Dado Historia — Al-Ándalus y reinos cristianos</title>
-  <style>
-    :root{
-      --ink:#2b2b2b;
-      --soft:#6b6b6b;
-      --paper:#f7f6f3;
-      --card:#ffffff;
-      --line:#d8d6cf;
-      --accent:#9c9a93;
-    }
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>🎲 Dado Histórico — PNG Icons</title>
+<style>
+  :root{
+    --bg0:#0b0f18;
+    --bg1:#111a2b;
+    --bg2:#0c1220;
+    --card: rgba(255,255,255,.06);
+    --card2: rgba(255,255,255,.10);
+    --stroke: rgba(255,255,255,.92);
+    --muted: rgba(255,255,255,.72);
+    --muted2: rgba(255,255,255,.55);
+    --accent:#7dd3fc;
+    --accent2:#fbbf24;
+    --danger:#fb7185;
 
-    body{
-      margin:0;
-      padding:24px;
-      font-family: system-ui,-apple-system,Segoe UI,Roboto,Arial;
-      background: var(--paper);
-      color: var(--ink);
-      display:flex;
-      justify-content:center;
-    }
+    --diceA:#f4f1ea;
+    --diceB:#d9d2c4;
+    --diceEdge:#bdb3a0;
+    --diceInk:#1a1a1a;
+  }
 
-    .app{
-      width:min(980px, 100%);
-      display:grid;
-      gap:16px;
-    }
+  *{ box-sizing:border-box; }
+  body{
+    margin:0;
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Arial, sans-serif;
+    color:white;
+    min-height:100svh;
+    display:grid;
+    place-items:center;
+    background:
+      radial-gradient(1200px 700px at 20% 10%, rgba(125,211,252,.14), transparent 55%),
+      radial-gradient(900px 600px at 80% 20%, rgba(251,191,36,.10), transparent 55%),
+      radial-gradient(900px 700px at 20% 90%, rgba(251,113,133,.10), transparent 55%),
+      linear-gradient(180deg, var(--bg0), var(--bg1) 40%, var(--bg2));
+  }
 
-    header{
-      display:flex;
-      flex-wrap:wrap;
-      gap:14px;
-      align-items:flex-end;
-      justify-content:space-between;
-    }
+  .app{
+    width:min(1100px, 94vw);
+    display:grid;
+    gap:14px;
+  }
 
-    h1{
-      margin:0;
-      font-size:20px;
-      font-weight:800;
-    }
+  header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    padding:14px 16px;
+    border-radius:18px;
+    background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.06));
+    border:1px solid rgba(255,255,255,.10);
+    box-shadow: 0 18px 50px rgba(0,0,0,.35);
+    backdrop-filter: blur(10px);
+  }
 
-    .sub{
-      margin:6px 0 0;
-      color:var(--soft);
-      font-size:13px;
-      line-height:1.4;
-    }
+  .title{
+    display:grid;
+    gap:4px;
+  }
+  .title h1{
+    margin:0;
+    font-size:16px;
+    letter-spacing:.2px;
+  }
+  .title p{
+    margin:0;
+    font-size:13px;
+    color:var(--muted);
+    line-height:1.35;
+    max-width:72ch;
+  }
 
-    .controls{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-    }
+  .controls{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    align-items:center;
+    justify-content:flex-end;
+  }
+  .pill{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:8px 10px;
+    border-radius:999px;
+    background: rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.12);
+    color:var(--muted);
+    font-weight:700;
+    font-size:12px;
+  }
 
-    button{
-      cursor:pointer;
-      padding:10px 14px;
-      border-radius:12px;
-      border:1px solid var(--line);
-      background:var(--card);
-      color:var(--ink);
-      font-weight:700;
-      font-size:14px;
-    }
+  .btn{
+    cursor:pointer;
+    padding:10px 12px;
+    border-radius:14px;
+    border:1px solid rgba(255,255,255,.14);
+    background: rgba(255,255,255,.09);
+    color:white;
+    font-weight:800;
+    font-size:13px;
+    transition: transform .12s ease, filter .12s ease, background .12s ease;
+  }
+  .btn:hover{ filter:brightness(1.06); background: rgba(255,255,255,.12); }
+  .btn:active{ transform: translateY(1px) scale(.99); }
 
-    button:hover{
-      background:#f0efe9;
-    }
+  .btn.primary{
+    border:1px solid rgba(125,211,252,.35);
+    background: linear-gradient(180deg, rgba(125,211,252,.22), rgba(125,211,252,.10));
+  }
+  .btn.warn{
+    border:1px solid rgba(251,191,36,.35);
+    background: linear-gradient(180deg, rgba(251,191,36,.20), rgba(251,191,36,.08));
+  }
 
-    button.primary{
-      background:#e9e7df;
-      border:1px solid var(--accent);
-      box-shadow:none;
-    }
+  .grid{
+    display:grid;
+    grid-template-columns: 1.2fr .8fr;
+    gap:14px;
+    align-items:stretch;
+  }
+  @media (max-width: 980px){
+    .grid{ grid-template-columns: 1fr; }
+  }
 
-    .board{
-      display:grid;
-      gap:18px;
-    }
+  .panel{
+    border-radius:22px;
+    background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.06));
+    border:1px solid rgba(255,255,255,.10);
+    box-shadow: 0 18px 60px rgba(0,0,0,.40);
+    overflow:hidden;
+    position:relative;
+  }
+  .panelInner{ padding:16px; display:grid; gap:12px; }
 
-    .dieWrap{
-      display:flex;
-      flex-direction:column;
-      gap:12px;
-      align-items:center;
-      justify-content:center;
-      border:1px solid var(--line);
-      border-radius:18px;
-      background:var(--card);
-      padding:18px;
-    }
+  .heroRow{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    flex-wrap:wrap;
+  }
+  .heroRow .h2{
+    font-size:14px;
+    font-weight:900;
+    letter-spacing:.2px;
+  }
+  .hint{
+    font-size:13px;
+    color:var(--muted);
+    background: rgba(0,0,0,.20);
+    border:1px solid rgba(255,255,255,.10);
+    border-radius:16px;
+    padding:12px;
+    line-height:1.35;
+  }
 
-    .die{
-      width:min(340px, 90vw);
-      aspect-ratio:1/1;
-      border:3px solid var(--ink);
-      border-radius:20px;
-      background:var(--card);
-      display:grid;
-      place-items:center;
-      user-select:none;
-      cursor:pointer;
-      position:relative;
-    }
+  /* ===== DADO 3D ===== */
+  .stage{
+    display:grid;
+    place-items:center;
+    padding:12px 0 6px;
+  }
+  .shadow{
+    width:min(420px, 80vw);
+    height:24px;
+    border-radius:999px;
+    background: radial-gradient(circle at 50% 50%, rgba(0,0,0,.55), rgba(0,0,0,0) 70%);
+    filter: blur(2px);
+    opacity:.55;
+    transform: translateY(-10px);
+  }
 
-    .die:active{
-      transform:scale(.985);
-    }
+  .cubeWrap{
+    width:min(460px, 84vw);
+    height:360px;
+    perspective: 1100px;
+    display:grid;
+    place-items:center;
+    user-select:none;
+  }
 
-    .dieHint{
-      position:absolute;
-      bottom:14px;
-      left:50%;
-      transform:translateX(-50%);
-      font-size:12px;
-      color:var(--soft);
-      background:var(--paper);
-      padding:6px 10px;
-      border-radius:999px;
-      border:1px solid var(--line);
-      pointer-events:none;
-    }
+  .cube{
+    width:220px;
+    height:220px;
+    position:relative;
+    transform-style:preserve-3d;
+    transform: rotateX(-18deg) rotateY(32deg);
+    cursor:pointer;
+    outline:none;
+  }
 
-    .stats{
-      display:flex;
-      flex-wrap:wrap;
-      gap:8px;
-      align-items:center;
-      font-size:13px;
-    }
+  .cube::before{
+    content:"";
+    position:absolute;
+    inset:-12px;
+    border-radius:34px;
+    background:
+      radial-gradient(180px 140px at 25% 20%, rgba(255,255,255,.55), transparent 60%),
+      radial-gradient(220px 200px at 70% 80%, rgba(0,0,0,.30), transparent 60%),
+      linear-gradient(180deg, rgba(255,255,255,.10), rgba(0,0,0,.18));
+    filter: blur(.2px);
+    transform: translateZ(-2px);
+    pointer-events:none;
+    opacity:.85;
+  }
 
-    .badge{
-      display:inline-flex;
-      align-items:center;
-      gap:6px;
-      padding:6px 10px;
-      border:1px solid var(--line);
-      border-radius:999px;
-      font-size:12px;
-      background:#f4f3ee;
-    }
+  .face{
+    position:absolute;
+    inset:0;
+    border-radius:30px;
+    background:
+      radial-gradient(160px 120px at 22% 20%, rgba(255,255,255,.92), rgba(255,255,255,0) 62%),
+      radial-gradient(220px 200px at 70% 82%, rgba(0,0,0,.18), rgba(0,0,0,0) 62%),
+      linear-gradient(180deg, var(--diceA), var(--diceB));
+    border:1px solid rgba(0,0,0,.35);
+    box-shadow:
+      inset 0 0 0 2px rgba(255,255,255,.30),
+      inset 0 -16px 28px rgba(0,0,0,.10),
+      0 18px 46px rgba(0,0,0,.28);
+    display:grid;
+    place-items:center;
+    overflow:hidden;
+  }
 
-    .small{
-      color:var(--soft);
-      font-size:12px;
-    }
+  .face::after{
+    content:"";
+    position:absolute;
+    inset:14px;
+    border-radius:22px;
+    border:1px solid rgba(0,0,0,.16);
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,.22);
+    pointer-events:none;
+    opacity:.9;
+  }
 
-    .result{
-      border:1px solid var(--line);
-      border-radius:18px;
-      background:var(--card);
-      padding:16px;
-      display:grid;
-      gap:12px;
-    }
+  .iconPlate{
+    width:150px;
+    height:150px;
+    border-radius:24px;
+    display:grid;
+    place-items:center;
+    background:
+      radial-gradient(110px 80px at 30% 25%, rgba(255,255,255,.75), rgba(255,255,255,0) 60%),
+      linear-gradient(180deg, rgba(255,255,255,.55), rgba(0,0,0,.06));
+    border:1px solid rgba(0,0,0,.18);
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,.25);
+    position:relative;
+    z-index:2;
+  }
 
-    .row{
-      display:grid;
-      grid-template-columns:70px 1fr;
-      gap:14px;
-      align-items:center;
-    }
+  /* PNG sizes */
+  .face img{
+    width:120px;
+    height:120px;
+    object-fit:contain;
+    display:block;
+    filter: drop-shadow(0 2px 0 rgba(255,255,255,.30))
+            drop-shadow(0 10px 16px rgba(0,0,0,.20));
+  }
 
-    .title{
-      font-weight:900;
-      font-size:18px;
-      margin:0;
-    }
+  .front  { transform: translateZ(110px); }
+  .back   { transform: rotateY(180deg) translateZ(110px); }
+  .right  { transform: rotateY(90deg)  translateZ(110px); }
+  .left   { transform: rotateY(-90deg) translateZ(110px); }
+  .top    { transform: rotateX(90deg)  translateZ(110px); }
+  .bottom { transform: rotateX(-90deg) translateZ(110px); }
 
-    .desc{
-      margin:6px 0 0;
-      color:var(--soft);
-      font-size:13px;
-      line-height:1.4;
-    }
+  .rolling{
+    animation: roll 1050ms cubic-bezier(.15,.85,.18,1) both;
+  }
+  @keyframes roll{
+    0%   { transform: rotateX(-18deg) rotateY(32deg) translateY(0); }
+    15%  { transform: rotateX(90deg) rotateY(180deg) translateY(-18px); }
+    35%  { transform: rotateX(210deg) rotateY(420deg) translateY(-30px); }
+    60%  { transform: rotateX(320deg) rotateY(650deg) translateY(-12px); }
+    85%  { transform: rotateX(360deg) rotateY(820deg) translateY(-4px); }
+    100% { transform: rotateX(var(--rx)) rotateY(var(--ry)) translateY(0); }
+  }
 
-    .log{
-      border:1px dashed var(--line);
-      border-radius:18px;
-      background:var(--card);
-      padding:14px;
-    }
+  /* ===== RESULTADO + HISTORIAL ===== */
+  .bigResult{
+    min-height: 220px;
+    border-radius:18px;
+    padding:14px;
+    background: rgba(0,0,0,.18);
+    border:1px solid rgba(255,255,255,.10);
+    display:grid;
+    place-items:center;
+    position:relative;
+    overflow:hidden;
+  }
+  .bigResult .bigPlate{
+    width:220px;
+    height:220px;
+    border-radius:28px;
+    display:grid;
+    place-items:center;
+    background: linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.06));
+    border:1px solid rgba(255,255,255,.14);
+    box-shadow: 0 18px 50px rgba(0,0,0,.35);
+    overflow:hidden;
+  }
+  .bigResult img{
+    width:160px;
+    height:160px;
+    object-fit:contain;
+    display:block;
+  }
 
-    .log h2{
-      font-size:14px;
-      margin:0 0 10px;
-    }
+  .tray{
+    border-radius:18px;
+    padding:12px;
+    background: rgba(0,0,0,.18);
+    border:1px solid rgba(255,255,255,.10);
+  }
+  .trayTitle{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:10px;
+    font-size:12px;
+    color:var(--muted);
+    font-weight:800;
+    letter-spacing:.2px;
+  }
+  .icons{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+  }
+  .token{
+    width:54px;
+    height:54px;
+    border-radius:16px;
+    display:grid;
+    place-items:center;
+    background: rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.12);
+    box-shadow: 0 10px 24px rgba(0,0,0,.30);
+    overflow:hidden;
+  }
+  .token img{
+    width:32px;
+    height:32px;
+    object-fit:contain;
+    display:block;
+    opacity:.98;
+  }
 
-    .chips{
-      display:flex;
-      flex-wrap:wrap;
-      gap:8px;
-    }
-
-    .chip{
-      padding:6px 12px;
-      border-radius:999px;
-      border:1px solid var(--line);
-      background:#f2f1ec;
-      font-size:12px;
-      font-weight:700;
-    }
-
-    /* ---------- ICONOS PNG ---------- */
-    .icon img{
-      width:58px;
-      height:58px;
-      object-fit:contain;
-      display:block;
-    }
-
-    .dieFace img{
-      width:160px;
-      height:160px;
-      object-fit:contain;
-      display:block;
-    }
-  </style>
+  .srOnly{
+    position:absolute; width:1px; height:1px;
+    padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0);
+    white-space:nowrap; border:0;
+  }
+</style>
 </head>
+
 <body>
-  <div class="app">
-    <header>
-      <div>
-        <h1>🎲 Dado interactivo — Al-Ándalus y reinos cristianos</h1>
-        <p class="sub">
-          Clica el dado para sacar <b>una</b> palabra clave (sin repetir) con un icono.
-          Cuando se agoten, reinicia la partida.
-        </p>
-      </div>
-      <div class="controls">
-        <button id="btnRoll" class="primary">Tirar (o clicar el dado)</button>
-        <button id="btnReset">Reiniciar partida</button>
-      </div>
-    </header>
+<div class="app">
+  <header>
+    <div class="title">
+      <h1>🎲 Dado Histórico (PNG)</h1>
+      <p>Clic o barra espaciadora: sale <b>un símbolo</b> sin repetición y queda registrado.</p>
+    </div>
+    <div class="controls">
+      <span class="pill" id="pillRemaining">Quedan: —</span>
+      <span class="pill" id="status">Listo</span>
+      <button class="btn primary" id="btnRoll">Tirar</button>
+      <button class="btn warn" id="btnReset">Reiniciar</button>
+    </div>
+  </header>
 
-    <section class="board">
-      <div class="dieWrap">
-        <div id="die" class="die" role="button" aria-label="Tirar el dado">
-          <div id="dieFace" class="dieFace"></div>
-          <div class="dieHint">clic para tirar</div>
+  <div class="grid">
+    <section class="panel">
+      <div class="panelInner">
+        <div class="heroRow">
+          <div class="h2">El dado</div>
+          <div class="pill">Tip: espacio / click</div>
         </div>
 
-        <div class="stats">
-          <span class="badge">🎯 Sin repetición</span>
-          <span id="remaining" class="badge">Quedan: —</span>
-          <span id="status" class="small"></span>
-        </div>
-      </div>
-
-      <div class="result" aria-live="polite">
-        <div class="row">
-          <div id="icon" class="icon"></div>
-          <div>
-            <p id="title" class="title">Haz tu primera tirada</p>
-            <p id="desc" class="desc">Saldrá una palabra clave del tema (y no volverá a salir en esta partida).</p>
+        <div class="stage">
+          <div class="cubeWrap">
+            <div id="cube" class="cube" role="button" tabindex="0" aria-label="Tirar el dado">
+              <div id="faceFront" class="face front"></div>
+              <div id="faceBack" class="face back"></div>
+              <div id="faceRight" class="face right"></div>
+              <div id="faceLeft" class="face left"></div>
+              <div id="faceTop" class="face top"></div>
+              <div id="faceBottom" class="face bottom"></div>
+              <span class="srOnly" id="ariaResult">Sin resultado.</span>
+            </div>
           </div>
+          <div class="shadow"></div>
+        </div>
+
+        <div class="hint">
+          🗣️ Cada turno: <b>1 hecho histórico</b> + <b>1 invención narrativa</b>.
+          <br/>Ej: “Barco + Pacto → cambia la relación entre dos pueblos…”
+        </div>
+
+        <div class="controls" style="justify-content:center;">
+          <button class="btn primary" id="btnRoll2">Tirar</button>
         </div>
       </div>
+    </section>
 
-      <div class="log">
-        <h2>Resultados que ya han salido (en esta partida)</h2>
-        <div id="chips" class="chips"></div>
+    <section class="panel">
+      <div class="panelInner">
+        <div class="heroRow">
+          <div class="h2">Resultado</div>
+          <div class="pill">Historial: <span id="usedCount">0</span></div>
+        </div>
+
+        <div class="bigResult" id="bigResult" aria-live="polite" aria-atomic="true">
+          <div class="bigPlate" id="bigPlate"></div>
+        </div>
+
+        <div class="tray">
+          <div class="trayTitle">
+            <span>Ya han salido</span>
+            <span id="usedCount2">0</span>
+          </div>
+          <div class="icons" id="usedIcons"></div>
+        </div>
       </div>
     </section>
   </div>
+</div>
 
 <script>
 (() => {
-  // Carpeta donde están tus imágenes
   const ASSETS_DIR = "assets/";
 
-  // Crea <img> usando el nombre exacto del archivo (soporta ñ, guiones, etc.)
-  function imgTag(filename, alt){
-    const src = ASSETS_DIR + encodeURI(filename);
-    return `<img src="${src}" alt="${escapeHtml(alt || '')}" loading="lazy" decoding="async">`;
-  }
+  // Tus nombres EXACTOS (los de tu lista inicial).
+  // NOTA: elimino "rr.pgn" por ser typo.
+  const IMAGE_FILES = [
+    "amistad-equipo.png",
+    "amistad.png",
+    "apreton-manos.png",
+    "apreton_manos_indigena_colono.png",
+    "ayuda-amistad.png",
+    "barco_velero.png",
+    "bola-cadenas.png",
+    "bola-futuro.png",
+    "bombilla-idea.png",
+    "bombilla-rota.png",
+    "caballero_ayudando_a_otro.png",
+    "caballero_cruzado_bandera.png",
+    "caballeros-salvaniño.png",
+    "calaver-tibias.png",
+    "calavera-dinero.png",
+    "calendario_azteca_sol.png",
+    "campanaroseta.png",
+    "candado-conllave.png",
+    "canon_y_torre.png",
+    "cara-alien.png",
+    "casas-lanzas.png",
+    "castillo_fortaleza.png",
+    "colon.png",
+    "compañeros1.png",
+    "corazon-roto.png",
+    "corona.png",
+    "diana-conflecha.png",
+    "dragon.png",
+    "duda-camino.png",
+    "dudas-hombre.png",
+    "duelo_caballeros.png",
+    "espadas-escudo.png",
+    "esposas.png",
+    "explorador_con_avion.png",
+    "globo-dialogoalterado.png",
+    "globos-conversacion.png",
+    "guerrero_mongol_a_caballo.png",
+    "hombre decidecamino.png",
+    "hombre-amarrado.png",
+    "hombre-ansiedadfuria.png",
+    "hombre-asciende.png",
+    "hombre-ayudaotro.png",
+    "hombre-corazonroto.png",
+    "hombre-decidecamino.png",
+    "hombre-dormir.png",
+    "hombre-escudorecibeflechas.png",
+    "hombre-huyeespectro.png",
+    "hombre-mapaseñalesposte.png",
+    "hombre-nostalgianube.png",
+    "hombre-silenciado.png",
+    "hombre-tristeza.png",
+    "hombres-antorchas.png",
+    "hombres-converfogata.png",
+    "hombres-conversacion.png",
+    "hombres-cotilleo.png",
+    "hombres-gallinitaciega.png",
+    "hombrevivo-conmuerto.png",
+    "huella-peligroybomba.png",
+    "huracan.png",
+    "imprenta.png",
+    "ira.png",
+    "justicia.png",
+    "la muerte.png",
+    "ladron.png",
+    "lapida-sol.png",
+    "leonardo_pintando_monalisa.png",
+    "libro-abierto.png",
+    "libro-fuegonube.png",
+    "lupa-huellas.png",
+    "lupa.png",
+    "mapa-islas.png",
+    "marino-telescopio.png",
+    "medico_cruz_roja.png",
+    "montaña-nubesol.png",
+    "mundo-pluma.png",
+    "ojo-cerradura.png",
+    "ojo-llorar.png",
+    "pacto-manos.png",
+    "pergamino-pluma.png",
+    "pergamino_con_sello.png",
+    "piramide-azteca.png",
+    "pirata_con_barco.png",
+    "puerta-fantasma.png",
+    "regalo.png",
+    "reina_isabelina.png",
+    "relojes-dinero.png",
+    "rey-magia.png",
+    "reyes_vikingos_leyendo.png",
+    "rosario.png",
+    "rueda-solar.png",
+    "serpiente.png",
+    "set16_crop_6.png",
+    "sextante-mapa.png",
+    "telescopio.png",
+    "templo-grigo.png",
+    "tesoro_pirata_cofre.png",
+    "torii_japon_agua.png",
+    "varita.png",
+    "vikingo_bandera_y_escudo.png"
+  ];
 
-  // Imagen “neutra” cuando no se ha tirado (elige una que tengas segura)
-  // Puedes cambiarla por otra: por ejemplo "set16_crop_6.png"
-  const IDLE_IMAGE = "set16_crop_6.png";
-
-  // ===== 1) Caras del dado (texto + imagen) =====
-  // He asignado imágenes de tu lista a cada concepto.
-  // Si quieres cambiar alguna, solo cambia el campo "img".
-  const faces = [
-    { key:"711", desc:"Comienza la conquista musulmana de la Península.", img:"calendario_azteca_sol.png" },
-    { key:"Guadalete", desc:"Derrota del rey Rodrigo (711).", img:"duelo_caballeros.png" },
-    { key:"Tariq", desc:"General que cruza el Estrecho con tropas.", img:"barco_velero.png" },
-    { key:"Musa", desc:"Gobernador del norte de África.", img:"explorador_con_avion.png" },
-    { key:"Toledo (713)", desc:"Conquista de la capital visigoda.", img:"castillo_fortaleza.png" },
-    { key:"Córdoba", desc:"Capital de al-Ándalus.", img:"campanaroseta.png" },
-    { key:"Emirato", desc:"Provincia gobernada por un emir.", img:"corona.png" },
-    { key:"Poitiers (732)", desc:"Derrota que frena la expansión al norte.", img:"espadas-escudo.png" },
-    { key:"Abderramán I", desc:"Funda el emirato independiente (756).", img:"rey-magia.png" },
-    { key:"Califato (929)", desc:"Abderramán III se proclama califa.", img:"corona.png" },
-    { key:"Háyib", desc:"Figura similar a primer ministro.", img:"pergamino-pluma.png" },
-    { key:"Al-Hakam II", desc:"Impulsa cultura y biblioteca.", img:"libro-abierto.png" },
-    { key:"Almanzor", desc:"Razias contra reinos cristianos.", img:"hombres-antorchas.png" },
-    { key:"1031", desc:"Desaparición del califato; taifas.", img:"duda-camino.png" },
-    { key:"Taifas", desc:"Reinos rivales y división política.", img:"casas-lanzas.png" },
-    { key:"Parias", desc:"Tributos pagados a reinos cristianos.", img:"calavera-dinero.png" },
-    { key:"Almorávides", desc:"Intervención bereber (1086).", img:"puerta-fantasma.png" },
-    { key:"Almohades", desc:"Nueva intervención bereber (1146).", img:"canon_y_torre.png" },
-    { key:"Las Navas (1212)", desc:"Derrota almohade decisiva.", img:"diana-conflecha.png" },
-    { key:"Granada", desc:"Último reino nazarí (1246–1492).", img:"piramide-azteca.png" },
-    { key:"Mozárabes", desc:"Cristianos en al-Ándalus.", img:"rosario.png" },
-    { key:"Muladíes", desc:"Cristianos islamizados.", img:"pacto-manos.png" },
-    { key:"Judería", desc:"Barrios judíos; minoría activa.", img:"rueda-solar.png" },
-    { key:"Zoco", desc:"Mercado urbano y comercio.", img:"regalo.png" },
-    { key:"Acequia / Noria", desc:"Regadío: acequias y norias.", img:"montaña-nubesol.png" },
-    { key:"Covadonga (722)", desc:"Núcleo de resistencia (Pelayo).", img:"montaña-nubesol.png" },
-    { key:"Castilla (castillos)", desc:"Frontera fortificada y condados.", img:"castillo_fortaleza.png" },
-    { key:"1230", desc:"Unión definitiva Castilla-León (Fernando III).", img:"amistad-equipo.png" },
-    { key:"Fueros", desc:"Cartas pueblas para repoblación.", img:"pergamino_con_sello.png" },
-    { key:"Órdenes militares", desc:"Monjes-soldado: conquista/defensa.", img:"caballero_cruzado_bandera.png" },
-    { key:"Pacto (Teodomiro)", desc:"Capitulación y tributos (713).", img:"apreton-manos.png" },
-  ].map(f => ({
-    ...f,
-    icon: imgTag(f.img, f.key) // icono pequeño (resultado) y también para el dado
+  // Construimos ICONS automáticamente desde los nombres.
+  const ICONS = IMAGE_FILES.map(file => ({
+    name: prettyName(file),
+    file,
+    src: ASSETS_DIR + encodeURI(file)
   }));
 
-  // ===== 2) Motor “sin repetición” =====
+  function prettyName(filename){
+    const base = filename.replace(/\.[a-z0-9]+$/i, "");
+    return base
+      .replace(/[_-]+/g, " ")
+      .replace(/\s+/g, " ")
+      .trim();
+  }
+
+  // =========================
+  // LÓGICA (bolsa sin repetir)
+  // =========================
   let bag = [];
   let used = [];
+  let isRolling = false;
 
-  const die = document.getElementById("die");
-  const dieFace = document.getElementById("dieFace");
-  const btnRoll = document.getElementById("btnRoll");
-  const btnReset = document.getElementById("btnReset");
-  const remaining = document.getElementById("remaining");
+  const cube = document.getElementById("cube");
+  const faceFront = document.getElementById("faceFront");
+  const faceBack = document.getElementById("faceBack");
+  const faceRight = document.getElementById("faceRight");
+  const faceLeft = document.getElementById("faceLeft");
+  const faceTop = document.getElementById("faceTop");
+  const faceBottom = document.getElementById("faceBottom");
+
+  const bigPlate = document.getElementById("bigPlate");
+  const usedIcons = document.getElementById("usedIcons");
+  const usedCount = document.getElementById("usedCount");
+  const usedCount2 = document.getElementById("usedCount2");
+  const pillRemaining = document.getElementById("pillRemaining");
   const status = document.getElementById("status");
-  const icon = document.getElementById("icon");
-  const title = document.getElementById("title");
-  const desc = document.getElementById("desc");
-  const chips = document.getElementById("chips");
+  const ariaResult = document.getElementById("ariaResult");
+
+  const btnRoll = document.getElementById("btnRoll");
+  const btnRoll2 = document.getElementById("btnRoll2");
+  const btnReset = document.getElementById("btnReset");
+
+  // Seleccionamos 6 imágenes para “idle” (si faltan, se reusa)
+  const IDLE_FACES = [
+    "set16_crop_6.png",
+    "bombilla-idea.png",
+    "barco_velero.png",
+    "castillo_fortaleza.png",
+    "calendario_azteca_sol.png",
+    "tesoro_pirata_cofre.png"
+  ].map(f => ASSETS_DIR + encodeURI(f));
 
   function resetGame(){
-    bag = shuffle([...faces]);
+    bag = shuffle([...ICONS]);
     used = [];
     renderRemaining();
     renderUsed();
     setResult(null);
-    setDieIdle();
-    status.textContent = "Partida reiniciada.";
+    setCubeIdleFaces();
+    status.textContent = "Listo";
+  }
+
+  function renderRemaining(){
+    pillRemaining.textContent = `Quedan: ${bag.length}/${ICONS.length}`;
+  }
+
+  function renderUsed(){
+    usedCount.textContent = String(used.length);
+    usedCount2.textContent = String(used.length);
+    usedIcons.innerHTML = "";
+    used.forEach(u=>{
+      const t = document.createElement("div");
+      t.className = "token";
+      t.innerHTML = `<img src="${u.src}" alt="${escapeHtml(u.name)}">`;
+      t.title = u.name;
+      usedIcons.appendChild(t);
+    });
+  }
+
+  function setResult(icon){
+    if(!icon){
+      // Idle en resultado: primera imagen del idle set
+      bigPlate.innerHTML = `<img src="${IDLE_FACES[0]}" alt="Sin resultado">`;
+      ariaResult.textContent = "Sin resultado todavía.";
+      return;
+    }
+    bigPlate.innerHTML = `<img src="${icon.src}" alt="${escapeHtml(icon.name)}">`;
+    ariaResult.textContent = `Ha salido: ${icon.name}`;
+  }
+
+  function faceHTML(src, name){
+    // Siempre PNG
+    return `<div class="iconPlate">
+      <img src="${src}" alt="${escapeHtml(name || '')}">
+    </div>`;
   }
 
   function roll(){
+    if(isRolling) return;
+
     if(bag.length === 0){
-      status.textContent = "No quedan resultados. Reinicia la partida.";
-      die.animate(
-        [{transform:"translateX(0)"},{transform:"translateX(-6px)"},{transform:"translateX(6px)"},{transform:"translateX(0)"}],
+      status.textContent = "Sin símbolos. Reinicia.";
+      cube.animate(
+        [{transform:"rotateX(-18deg) rotateY(32deg)"},
+         {transform:"rotateX(-18deg) rotateY(32deg) translateY(-6px)"},
+         {transform:"rotateX(-18deg) rotateY(32deg)"}],
         {duration:260}
       );
       return;
     }
-    status.textContent = "";
-    die.animate(
-      [{transform:"rotate(0deg)"},{transform:"rotate(6deg)"},{transform:"rotate(-6deg)"},{transform:"rotate(0deg)"}],
-      {duration:240}
-    );
+
+    isRolling = true;
+    status.textContent = "Rodando…";
 
     const next = bag.pop();
     used.push(next);
-    setResult(next);
     renderRemaining();
     renderUsed();
-    setDieFace(next);
+
+    const rx = randPick([ -18, 18, 42, 66, 96, 120, 150, 180, 210, 240, 270, 300, 330 ]);
+    const ry = randPick([  32, 70, 110, 160, 210, 260, 310, 350, 390, 430, 470, 510, 550 ]);
+    cube.style.setProperty("--rx", `${rx}deg`);
+    cube.style.setProperty("--ry", `${ry}deg`);
+
+    // Durante el giro: caras “idle” con PNG
+    setCubeIdleFaces();
+
+    cube.classList.remove("rolling");
+    void cube.offsetWidth;
+    cube.classList.add("rolling");
+
+    setTimeout(()=>{
+      cube.classList.remove("rolling");
+      // Al terminar: mostramos el resultado en la cara frontal + panel resultado
+      faceFront.innerHTML = faceHTML(next.src, next.name);
+      faceFront.title = next.name;
+      setResult(next);
+      status.textContent = "Listo";
+      isRolling = false;
+    }, 1080);
   }
 
-  function setResult(face){
-    if(!face){
-      icon.innerHTML = "";
-      title.textContent = "Haz tu primera tirada";
-      desc.textContent = "Saldrá una palabra clave del tema (y no volverá a salir en esta partida).";
-      return;
-    }
-    icon.innerHTML = face.icon;
-    title.textContent = face.key;
-    desc.textContent = face.desc;
+  function setCubeIdleFaces(){
+    // Ponemos 6 imágenes “bonitas” para las 6 caras del cubo en reposo / durante el giro
+    faceFront.innerHTML  = faceHTML(IDLE_FACES[1] || IDLE_FACES[0], "idle");
+    faceBack.innerHTML   = faceHTML(IDLE_FACES[2] || IDLE_FACES[0], "idle");
+    faceRight.innerHTML  = faceHTML(IDLE_FACES[3] || IDLE_FACES[0], "idle");
+    faceLeft.innerHTML   = faceHTML(IDLE_FACES[4] || IDLE_FACES[0], "idle");
+    faceTop.innerHTML    = faceHTML(IDLE_FACES[5] || IDLE_FACES[0], "idle");
+    faceBottom.innerHTML = faceHTML(IDLE_FACES[0], "idle");
   }
 
-  function renderRemaining(){
-    remaining.textContent = `Quedan: ${bag.length}/${faces.length}`;
-  }
-
-  function renderUsed(){
-    chips.innerHTML = "";
-    used.forEach(u=>{
-      const s = document.createElement("span");
-      s.className = "chip";
-      s.textContent = u.key;
-      chips.appendChild(s);
-    });
-  }
-
-  function setDieIdle(){
-    dieFace.innerHTML = imgTag(IDLE_IMAGE, "Dado");
-  }
-
-  function setDieFace(face){
-    dieFace.innerHTML = face.icon; // la misma imagen, pero CSS la hace grande dentro de .dieFace
-  }
+  function randPick(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
 
   function shuffle(arr){
-    for(let i=arr.length-1; i>0; i--){
-      const j = Math.floor(Math.random()*(i+1));
-      [arr[i], arr[j]] = [arr[j], arr[i]];
+    for(let i=arr.length-1;i>0;i--){
+      const j=Math.floor(Math.random()*(i+1));
+      [arr[i],arr[j]]=[arr[j],arr[i]];
     }
     return arr;
   }
@@ -420,12 +709,25 @@
     }[s]));
   }
 
-  // ===== 3) Eventos =====
-  die.addEventListener("click", roll);
+  // eventos
+  cube.addEventListener("click", roll);
   btnRoll.addEventListener("click", roll);
+  btnRoll2.addEventListener("click", roll);
   btnReset.addEventListener("click", resetGame);
 
-  // init
+  cube.addEventListener("keydown", (e)=>{
+    if(e.key === " " || e.key === "Enter"){
+      e.preventDefault();
+      roll();
+    }
+  });
+  window.addEventListener("keydown", (e)=>{
+    if(e.key === " " && document.activeElement === document.body){
+      e.preventDefault();
+      roll();
+    }
+  });
+
   resetGame();
 })();
 </script>
