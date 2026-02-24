@@ -1,0 +1,433 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Dado Historia — Al-Ándalus y reinos cristianos</title>
+  <style>
+    :root{
+      --ink:#2b2b2b;
+      --soft:#6b6b6b;
+      --paper:#f7f6f3;
+      --card:#ffffff;
+      --line:#d8d6cf;
+      --accent:#9c9a93;
+    }
+
+    body{
+      margin:0;
+      padding:24px;
+      font-family: system-ui,-apple-system,Segoe UI,Roboto,Arial;
+      background: var(--paper);
+      color: var(--ink);
+      display:flex;
+      justify-content:center;
+    }
+
+    .app{
+      width:min(980px, 100%);
+      display:grid;
+      gap:16px;
+    }
+
+    header{
+      display:flex;
+      flex-wrap:wrap;
+      gap:14px;
+      align-items:flex-end;
+      justify-content:space-between;
+    }
+
+    h1{
+      margin:0;
+      font-size:20px;
+      font-weight:800;
+    }
+
+    .sub{
+      margin:6px 0 0;
+      color:var(--soft);
+      font-size:13px;
+      line-height:1.4;
+    }
+
+    .controls{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    button{
+      cursor:pointer;
+      padding:10px 14px;
+      border-radius:12px;
+      border:1px solid var(--line);
+      background:var(--card);
+      color:var(--ink);
+      font-weight:700;
+      font-size:14px;
+    }
+
+    button:hover{
+      background:#f0efe9;
+    }
+
+    button.primary{
+      background:#e9e7df;
+      border:1px solid var(--accent);
+      box-shadow:none;
+    }
+
+    .board{
+      display:grid;
+      gap:18px;
+    }
+
+    .dieWrap{
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+      align-items:center;
+      justify-content:center;
+      border:1px solid var(--line);
+      border-radius:18px;
+      background:var(--card);
+      padding:18px;
+    }
+
+    .die{
+      width:min(340px, 90vw);
+      aspect-ratio:1/1;
+      border:3px solid var(--ink);
+      border-radius:20px;
+      background:var(--card);
+      display:grid;
+      place-items:center;
+      user-select:none;
+      cursor:pointer;
+      position:relative;
+    }
+
+    .die:active{
+      transform:scale(.985);
+    }
+
+    .dieHint{
+      position:absolute;
+      bottom:14px;
+      left:50%;
+      transform:translateX(-50%);
+      font-size:12px;
+      color:var(--soft);
+      background:var(--paper);
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      pointer-events:none;
+    }
+
+    .stats{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      align-items:center;
+      font-size:13px;
+    }
+
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding:6px 10px;
+      border:1px solid var(--line);
+      border-radius:999px;
+      font-size:12px;
+      background:#f4f3ee;
+    }
+
+    .small{
+      color:var(--soft);
+      font-size:12px;
+    }
+
+    .result{
+      border:1px solid var(--line);
+      border-radius:18px;
+      background:var(--card);
+      padding:16px;
+      display:grid;
+      gap:12px;
+    }
+
+    .row{
+      display:grid;
+      grid-template-columns:70px 1fr;
+      gap:14px;
+      align-items:center;
+    }
+
+    .title{
+      font-weight:900;
+      font-size:18px;
+      margin:0;
+    }
+
+    .desc{
+      margin:6px 0 0;
+      color:var(--soft);
+      font-size:13px;
+      line-height:1.4;
+    }
+
+    .log{
+      border:1px dashed var(--line);
+      border-radius:18px;
+      background:var(--card);
+      padding:14px;
+    }
+
+    .log h2{
+      font-size:14px;
+      margin:0 0 10px;
+    }
+
+    .chips{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+    }
+
+    .chip{
+      padding:6px 12px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:#f2f1ec;
+      font-size:12px;
+      font-weight:700;
+    }
+
+    /* ---------- ICONOS PNG ---------- */
+    .icon img{
+      width:58px;
+      height:58px;
+      object-fit:contain;
+      display:block;
+    }
+
+    .dieFace img{
+      width:160px;
+      height:160px;
+      object-fit:contain;
+      display:block;
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header>
+      <div>
+        <h1>🎲 Dado interactivo — Al-Ándalus y reinos cristianos</h1>
+        <p class="sub">
+          Clica el dado para sacar <b>una</b> palabra clave (sin repetir) con un icono.
+          Cuando se agoten, reinicia la partida.
+        </p>
+      </div>
+      <div class="controls">
+        <button id="btnRoll" class="primary">Tirar (o clicar el dado)</button>
+        <button id="btnReset">Reiniciar partida</button>
+      </div>
+    </header>
+
+    <section class="board">
+      <div class="dieWrap">
+        <div id="die" class="die" role="button" aria-label="Tirar el dado">
+          <div id="dieFace" class="dieFace"></div>
+          <div class="dieHint">clic para tirar</div>
+        </div>
+
+        <div class="stats">
+          <span class="badge">🎯 Sin repetición</span>
+          <span id="remaining" class="badge">Quedan: —</span>
+          <span id="status" class="small"></span>
+        </div>
+      </div>
+
+      <div class="result" aria-live="polite">
+        <div class="row">
+          <div id="icon" class="icon"></div>
+          <div>
+            <p id="title" class="title">Haz tu primera tirada</p>
+            <p id="desc" class="desc">Saldrá una palabra clave del tema (y no volverá a salir en esta partida).</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="log">
+        <h2>Resultados que ya han salido (en esta partida)</h2>
+        <div id="chips" class="chips"></div>
+      </div>
+    </section>
+  </div>
+
+<script>
+(() => {
+  // Carpeta donde están tus imágenes
+  const ASSETS_DIR = "assets/";
+
+  // Crea <img> usando el nombre exacto del archivo (soporta ñ, guiones, etc.)
+  function imgTag(filename, alt){
+    const src = ASSETS_DIR + encodeURI(filename);
+    return `<img src="${src}" alt="${escapeHtml(alt || '')}" loading="lazy" decoding="async">`;
+  }
+
+  // Imagen “neutra” cuando no se ha tirado (elige una que tengas segura)
+  // Puedes cambiarla por otra: por ejemplo "set16_crop_6.png"
+  const IDLE_IMAGE = "set16_crop_6.png";
+
+  // ===== 1) Caras del dado (texto + imagen) =====
+  // He asignado imágenes de tu lista a cada concepto.
+  // Si quieres cambiar alguna, solo cambia el campo "img".
+  const faces = [
+    { key:"711", desc:"Comienza la conquista musulmana de la Península.", img:"calendario_azteca_sol.png" },
+    { key:"Guadalete", desc:"Derrota del rey Rodrigo (711).", img:"duelo_caballeros.png" },
+    { key:"Tariq", desc:"General que cruza el Estrecho con tropas.", img:"barco_velero.png" },
+    { key:"Musa", desc:"Gobernador del norte de África.", img:"explorador_con_avion.png" },
+    { key:"Toledo (713)", desc:"Conquista de la capital visigoda.", img:"castillo_fortaleza.png" },
+    { key:"Córdoba", desc:"Capital de al-Ándalus.", img:"campanaroseta.png" },
+    { key:"Emirato", desc:"Provincia gobernada por un emir.", img:"corona.png" },
+    { key:"Poitiers (732)", desc:"Derrota que frena la expansión al norte.", img:"espadas-escudo.png" },
+    { key:"Abderramán I", desc:"Funda el emirato independiente (756).", img:"rey-magia.png" },
+    { key:"Califato (929)", desc:"Abderramán III se proclama califa.", img:"corona.png" },
+    { key:"Háyib", desc:"Figura similar a primer ministro.", img:"pergamino-pluma.png" },
+    { key:"Al-Hakam II", desc:"Impulsa cultura y biblioteca.", img:"libro-abierto.png" },
+    { key:"Almanzor", desc:"Razias contra reinos cristianos.", img:"hombres-antorchas.png" },
+    { key:"1031", desc:"Desaparición del califato; taifas.", img:"duda-camino.png" },
+    { key:"Taifas", desc:"Reinos rivales y división política.", img:"casas-lanzas.png" },
+    { key:"Parias", desc:"Tributos pagados a reinos cristianos.", img:"calavera-dinero.png" },
+    { key:"Almorávides", desc:"Intervención bereber (1086).", img:"puerta-fantasma.png" },
+    { key:"Almohades", desc:"Nueva intervención bereber (1146).", img:"canon_y_torre.png" },
+    { key:"Las Navas (1212)", desc:"Derrota almohade decisiva.", img:"diana-conflecha.png" },
+    { key:"Granada", desc:"Último reino nazarí (1246–1492).", img:"piramide-azteca.png" },
+    { key:"Mozárabes", desc:"Cristianos en al-Ándalus.", img:"rosario.png" },
+    { key:"Muladíes", desc:"Cristianos islamizados.", img:"pacto-manos.png" },
+    { key:"Judería", desc:"Barrios judíos; minoría activa.", img:"rueda-solar.png" },
+    { key:"Zoco", desc:"Mercado urbano y comercio.", img:"regalo.png" },
+    { key:"Acequia / Noria", desc:"Regadío: acequias y norias.", img:"montaña-nubesol.png" },
+    { key:"Covadonga (722)", desc:"Núcleo de resistencia (Pelayo).", img:"montaña-nubesol.png" },
+    { key:"Castilla (castillos)", desc:"Frontera fortificada y condados.", img:"castillo_fortaleza.png" },
+    { key:"1230", desc:"Unión definitiva Castilla-León (Fernando III).", img:"amistad-equipo.png" },
+    { key:"Fueros", desc:"Cartas pueblas para repoblación.", img:"pergamino_con_sello.png" },
+    { key:"Órdenes militares", desc:"Monjes-soldado: conquista/defensa.", img:"caballero_cruzado_bandera.png" },
+    { key:"Pacto (Teodomiro)", desc:"Capitulación y tributos (713).", img:"apreton-manos.png" },
+  ].map(f => ({
+    ...f,
+    icon: imgTag(f.img, f.key) // icono pequeño (resultado) y también para el dado
+  }));
+
+  // ===== 2) Motor “sin repetición” =====
+  let bag = [];
+  let used = [];
+
+  const die = document.getElementById("die");
+  const dieFace = document.getElementById("dieFace");
+  const btnRoll = document.getElementById("btnRoll");
+  const btnReset = document.getElementById("btnReset");
+  const remaining = document.getElementById("remaining");
+  const status = document.getElementById("status");
+  const icon = document.getElementById("icon");
+  const title = document.getElementById("title");
+  const desc = document.getElementById("desc");
+  const chips = document.getElementById("chips");
+
+  function resetGame(){
+    bag = shuffle([...faces]);
+    used = [];
+    renderRemaining();
+    renderUsed();
+    setResult(null);
+    setDieIdle();
+    status.textContent = "Partida reiniciada.";
+  }
+
+  function roll(){
+    if(bag.length === 0){
+      status.textContent = "No quedan resultados. Reinicia la partida.";
+      die.animate(
+        [{transform:"translateX(0)"},{transform:"translateX(-6px)"},{transform:"translateX(6px)"},{transform:"translateX(0)"}],
+        {duration:260}
+      );
+      return;
+    }
+    status.textContent = "";
+    die.animate(
+      [{transform:"rotate(0deg)"},{transform:"rotate(6deg)"},{transform:"rotate(-6deg)"},{transform:"rotate(0deg)"}],
+      {duration:240}
+    );
+
+    const next = bag.pop();
+    used.push(next);
+    setResult(next);
+    renderRemaining();
+    renderUsed();
+    setDieFace(next);
+  }
+
+  function setResult(face){
+    if(!face){
+      icon.innerHTML = "";
+      title.textContent = "Haz tu primera tirada";
+      desc.textContent = "Saldrá una palabra clave del tema (y no volverá a salir en esta partida).";
+      return;
+    }
+    icon.innerHTML = face.icon;
+    title.textContent = face.key;
+    desc.textContent = face.desc;
+  }
+
+  function renderRemaining(){
+    remaining.textContent = `Quedan: ${bag.length}/${faces.length}`;
+  }
+
+  function renderUsed(){
+    chips.innerHTML = "";
+    used.forEach(u=>{
+      const s = document.createElement("span");
+      s.className = "chip";
+      s.textContent = u.key;
+      chips.appendChild(s);
+    });
+  }
+
+  function setDieIdle(){
+    dieFace.innerHTML = imgTag(IDLE_IMAGE, "Dado");
+  }
+
+  function setDieFace(face){
+    dieFace.innerHTML = face.icon; // la misma imagen, pero CSS la hace grande dentro de .dieFace
+  }
+
+  function shuffle(arr){
+    for(let i=arr.length-1; i>0; i--){
+      const j = Math.floor(Math.random()*(i+1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+  }
+
+  function escapeHtml(str){
+    return String(str).replace(/[<>&'"]/g, s => ({
+      '<':'&lt;','>':'&gt;','&':'&amp;',"'":'&#39;','"':'&quot;'
+    }[s]));
+  }
+
+  // ===== 3) Eventos =====
+  die.addEventListener("click", roll);
+  btnRoll.addEventListener("click", roll);
+  btnReset.addEventListener("click", resetGame);
+
+  // init
+  resetGame();
+})();
+</script>
+</body>
+</html>
